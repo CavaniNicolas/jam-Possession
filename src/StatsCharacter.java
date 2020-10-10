@@ -25,5 +25,5 @@ public class StatsCharacter
     public static int strenthMax()
     {
 	return 100;
-    }    
+    }
 }
