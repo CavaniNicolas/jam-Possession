@@ -3,27 +3,27 @@ package src;
 public class Actors {
 
 	/** Gravite */
-	protected final int GRAVITY = -20;
+	final int GRAVITY = -20;
 
 	// Coordonnees de collisions minimales et maximales
-	protected int minX;
-	protected int maxX;
-	protected int minY;
-	protected int maxY;
+	public int minX = 0;
+	public int maxX = 2_000;
+	public int minY = 110;
+	public int maxY = 1_200;
 
 	// Largeur et Hauteur de l'entite	
-	protected int width;
-	protected int height;
+	int width;
+	int height;
 
 	// Coordonnees de l'entite
-	protected int x;
-	protected int y;
+	public int x;
+	public int y;
 	// Vitesses de l'entite
-	protected int speedX;
-	protected int speedY;
+	int speedX;
+	int speedY;
 	// Accelerations de l'entite
-	protected int accelX;
-	protected int accelY;
+	int accelX;
+	int accelY;
 
 
 	public Actors(int x, int y, int speedX, int speedY, int accelX, int accelY, int width, int height) {

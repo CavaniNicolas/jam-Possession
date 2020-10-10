@@ -14,40 +14,51 @@ import java.awt.event.KeyListener;
 public class MainGame extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1816999198544107363L;
 
-	private Map map;
+	static int winWidth;
+	static int winHeight;
+	static double oneUnityHeight;
+	static double oneUnityWidth;
+
+	Map map;
 
 	public MainGame() {
 		createWindow();
 	}
 
 
-	/**Cree la fenetre principale
-	 * <p>
-	 * La fenetre ne sera pas resizable par l'utilisateur (meme si le code y est adapte),
-	 * mais il aura la possibilite dans le menu de passer d'un mode fenetre a un mode plein ecran.
-	 */
+	/**Cree la fenetre principale*/
 	public void createWindow() {
 		this.setTitle("Possess Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Fenetre hors plein ecran : width = 80% et height = 90% (les proportions sont a peu pres conservees)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int)(screenSize.getWidth() * 0.8);
-		int height = (int)(screenSize.getHeight() * 0.9);
-		this.setSize(width, height);
-		//this.setLocationRelativeTo(null);
-		this.setLocation( (int)(screenSize.getWidth() * 0.1), (int)(screenSize.getHeight() * 0.05) );
+		winWidth = (int)(screenSize.getWidth() * 0.8);
+		winHeight = (int)(screenSize.getHeight() * 0.5);
+		this.setSize(winWidth, winHeight);
+		this.setLocationRelativeTo(null);
+		// this.setLocation( (int)(screenSize.getWidth() * 0.1), (int)(screenSize.getHeight() * 0.05) );
+		
+		
+		map = new Map("maps/map");
+		// map = new Map();
+		
+		System.out.println(winWidth +" " + winHeight);
+		oneUnityWidth = (double)winWidth / map.mapWidth;
+		oneUnityHeight = (double)winHeight / map.mapHeight;
+		System.out.println(oneUnityWidth +" " + oneUnityHeight);
 
-		// // this.setResizable(false);
-		// mainMenu = new MainMenu(this);
+		this.addKeyListener(this);
+		this.setContentPane(map);
+		this.setVisible(true);
 
-		map = new Map();
+		repaint();
+		startGame();
 
 		// Plein ecran
 		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// this.setUndecorated(true);
 
-		this.setVisible(true);
 	}
 
 
@@ -71,6 +82,41 @@ public class MainGame extends JFrame implements KeyListener {
 		handleKey(event, false);
 	}
 
+
+	public void initGame() {
+		// platform.loadAllImages();
+
+		// platform.getSnake().initSnake(Platform.gameSize);
+		// platform.createApples();
+	}
+
+
+	public void startGame() {
+		while (map.playing) {
+			repaint();
+
+			sleep(16);
+
+			map.moveCamera();
+
+			map.player.checkMovement();
+			map.player.moveXY();
+
+			// map.checkCollisions();
+
+		}
+		repaint();
+	}
+
+	/**Delay */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			e.printStackTrace();
+		}
+	}
 
 	/** sends input action to the board if the key is valid */
 	public void handleKey(KeyEvent event, Boolean bool) {
