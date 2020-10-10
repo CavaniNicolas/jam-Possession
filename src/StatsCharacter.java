@@ -1,5 +1,9 @@
 public class StatsCharacter
 {
+    public StatsCharacter()
+    {
+	hey();
+    }
     public static int speedMax()
     {
 	return 100;
