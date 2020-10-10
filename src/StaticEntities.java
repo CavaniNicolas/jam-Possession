@@ -2,6 +2,7 @@ package src;
 
 import java.awt.image.BufferedImage;
 
+
 public class StaticEntities {
 
     // position
@@ -25,12 +26,12 @@ public class StaticEntities {
         switch(entitie)
         {
             case 'P':
-                this.image = GameGraphisms.plateforms;
+                this.image = GameGraphisms.platform;
                 typeEntite = TypeEntitie.Platform;
                 this.width = 100;
                 this.height = 10;
                 break;
-            case 'W';
+            case 'W':
                 this.image = GameGraphisms.wall;
                 typeEntite = TypeEntitie.Wall;
                 this.width = 100;
@@ -74,5 +75,32 @@ public class StaticEntities {
         Strength;
     }  
 
-    
+    public int getPosX()
+    {
+        return posX;
+    }
+    public int getPosY()
+    {
+        return posY;
+    }
+    public int getWidth()
+    {
+        return width;
+    }
+    public int getHeight()
+    {
+        return height;
+    }
+
+
+    public void setPosX(int newX)
+    {
+        posX = newX;
+    }
+    public void setPosY(int newY)
+    {
+        posY = newY;
+    }
+
+
 }
