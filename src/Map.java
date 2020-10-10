@@ -5,8 +5,13 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class Map
 {
     private char mapArray[];
+    private int posX;
+    private final int cellWidth;
+    
     public Map(String fileName)
     {
+	this.posX = 0;
+	
 	try {
 	    File myObj = new File(fileName);
 	    Scanner myReader = new Scanner(myObj);
@@ -16,7 +21,7 @@ public class Map
 		j = 0;
 		String line = myReader.nextLine();
 		for(char c: line) {
-		    mapArray[i][j] = c;
+		    this.mapArray[i][j] = c;
 		    j++;
 		}
 		i++;
@@ -26,5 +31,9 @@ public class Map
 	    System.out.println("An error occurred.");
 	    e.printStackTrace();
 	}
+    }
+
+    public int getPosX(){
+	return posX;
     }
 }
