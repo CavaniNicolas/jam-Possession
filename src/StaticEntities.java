@@ -15,7 +15,7 @@ public class StaticEntities {
 
     TypeEntitie typeEntite;
 
-    private BufferedImage image;
+    BufferedImage image;
 
     
 
