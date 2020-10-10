@@ -1,5 +1,5 @@
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+package src;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -10,8 +10,6 @@ import javax.swing.JFrame;
 */
 public class MainGame extends JFrame {
 	private static final long serialVersionUID = 1816999198544107363L;
-
-	// private MainMenu mainMenu;
 
 	public MainGame() {
 		createWindow();
@@ -37,14 +35,6 @@ public class MainGame extends JFrame {
 
 		// // this.setResizable(false);
 		// mainMenu = new MainMenu(this);
-
-		// // Permet ensuite d'actualiser les valeurs des coordonnees et dimensions graphiques lors du prochain appel de paintComponent()
-		// this.addComponentListener(new ComponentAdapter() {
-		// 	// Si la fenetre est redimensionnee
-		// 	public void componentResized(ComponentEvent componentEvent) {
-		// 		mainMenu.getBoard().getBoardGraphism().setIsGraphicUpdateDone(false);
-		// 	}
-		// });
 
 
 		// Plein ecran

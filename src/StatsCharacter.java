@@ -1,5 +1,14 @@
+package src;
+
 public class StatsCharacter
 {
+
+    int jesuisnimportequoi;
+    public StatsCharacter() {
+        // bonjour
+        jesuisnimportequoi = 5;
+    }
+
     public static int speedMax()
     {
 	return 100;
