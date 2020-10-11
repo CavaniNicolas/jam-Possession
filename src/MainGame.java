@@ -1,63 +1,142 @@
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+package src;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-/**class MyWindow extends JFrame<p>
+
+/**class MyWindow extends JFrame<p> 
  * Gere la fenetre et les saisies clavier
 */
-public class MainGame extends JFrame {
+public class MainGame extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1816999198544107363L;
 
-	// private MainMenu mainMenu;
+	static int winWidth;
+	static int winHeight;
+	static double oneUnityHeight;
+	static double oneUnityWidth;
+
+	Map map;
 
 	public MainGame() {
 		createWindow();
 	}
 
 
-	/**Cree la fenetre principale
-	 * <p>
-	 * La fenetre ne sera pas resizable par l'utilisateur (meme si le code y est adapte),
-	 * mais il aura la possibilite dans le menu de passer d'un mode fenetre a un mode plein ecran.
-	 */
+	/**Cree la fenetre principale*/
 	public void createWindow() {
 		this.setTitle("Possess Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Fenetre hors plein ecran : width = 80% et height = 90% (les proportions sont a peu pres conservees)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int)(screenSize.getWidth() * 0.8);
-		int height = (int)(screenSize.getHeight() * 0.9);
-		this.setSize(width, height);
-		//this.setLocationRelativeTo(null);
-		this.setLocation( (int)(screenSize.getWidth() * 0.1), (int)(screenSize.getHeight() * 0.05) );
+		winWidth = (int)(screenSize.getWidth() * 0.8);
+		winHeight = (int)(screenSize.getHeight() * 0.5);
+		this.setSize(winWidth, winHeight);
+		this.setLocationRelativeTo(null);
+		// this.setLocation( (int)(screenSize.getWidth() * 0.1), (int)(screenSize.getHeight() * 0.05) );
+		
+		
+		map = new Map("maps/map");
+		// map = new Map();
+		
+		System.out.println(winWidth +" " + winHeight);
+		oneUnityWidth = (double)winWidth / map.mapWidth;
+		oneUnityHeight = (double)winHeight / map.mapHeight;
+		System.out.println(oneUnityWidth +" " + oneUnityHeight);
 
-		// // this.setResizable(false);
-		// mainMenu = new MainMenu(this);
+		this.addKeyListener(this);
+		this.setContentPane(map);
+		this.setVisible(true);
 
-		// // Permet ensuite d'actualiser les valeurs des coordonnees et dimensions graphiques lors du prochain appel de paintComponent()
-		// this.addComponentListener(new ComponentAdapter() {
-		// 	// Si la fenetre est redimensionnee
-		// 	public void componentResized(ComponentEvent componentEvent) {
-		// 		mainMenu.getBoard().getBoardGraphism().setIsGraphicUpdateDone(false);
-		// 	}
-		// });
-
+		repaint();
+		startGame();
 
 		// Plein ecran
 		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		// this.setUndecorated(true);
 
-		this.setVisible(true);
 	}
 
 
 	/** Le Main principal du jeu */
 	public static void main(String[] args) {
 		new MainGame();
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent event) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent event) {
+		handleKey(event, true);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent event) {
+		handleKey(event, false);
+	}
+
+
+	public void initGame() {
+		// platform.loadAllImages();
+
+		// platform.getSnake().initSnake(Platform.gameSize);
+		// platform.createApples();
+	}
+
+
+	public void startGame() {
+		while (map.playing) {
+			repaint();
+
+			sleep(16);
+
+			map.moveCamera();
+
+			map.player.checkMovement();
+			map.player.moveXY();
+
+			// map.checkCollisions();
+
+		}
+		repaint();
+	}
+
+	/**Delay */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			e.printStackTrace();
+		}
+	}
+
+	/** sends input action to the board if the key is valid */
+	public void handleKey(KeyEvent event, Boolean bool) {
+
+		int code = event.getKeyChar();
+		// System.out.print("Code clavier "+ code + "\n ");
+
+		if (code == 122 && map.player.canUp) { // Si on veut aller Up mais pas si on va deja Down
+			map.player.goUp = bool;
+		}
+		if (code == 115 && map.player.canDown) { // Si on veut aller Down mais pas si on va deja Up
+			map.player.goDown = bool;
+		}
+		if (code == 113 && map.player.canLeft) { // Si on veut aller Left mais pas si on va deja Right
+			map.player.goLeft = bool;
+		}
+		if (code == 100 && map.player.canRight) { // Si on veut aller Right mais pas si on va deja Left
+			map.player.goRight = bool;
+		}
+
 	}
 
 }
